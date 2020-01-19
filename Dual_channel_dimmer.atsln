@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Dual_channel_dimmer", "Dual_channel_dimmer.cproj", "{7105FBB0-A295-4B69-BE5B-3A5D6BC4C448}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7105FBB0-A295-4B69-BE5B-3A5D6BC4C448}.Debug|AVR.ActiveCfg = Debug|AVR
+		{7105FBB0-A295-4B69-BE5B-3A5D6BC4C448}.Debug|AVR.Build.0 = Debug|AVR
+		{7105FBB0-A295-4B69-BE5B-3A5D6BC4C448}.Release|AVR.ActiveCfg = Release|AVR
+		{7105FBB0-A295-4B69-BE5B-3A5D6BC4C448}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
