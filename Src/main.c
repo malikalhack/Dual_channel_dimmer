@@ -1,66 +1,73 @@
-/********************************
-* Название: Indicator.c			*
-* Версия  : beta				*
-* Автор	  : Malik				*
-* Создан  : 09.07.2015 12:43:51	*
-* Изменён : 27.07.2019 18:44:16	*
-* Для AVR: ATMEGA8				*
-* Тактовая частота: 8МГц (int)	*
-********************************/
-//Программа управления двухканальным диммером с отображением уровня яркости на LCD
-//=============================== Included files =================================
+/************************************
+* Title		: main.c				*
+* Release	: 0.1.B					*
+* Creator	: Malik					*
+* CPU		: ATMega8				*
+* Frequency	: 8 MHz (int)			*
+* Created	: 09.07.2015 12:43:51	*
+* Changed	: 22.10.2020			*
+************************************/
+/* Two-channel dimmer control program with display of brightness level on LCD. */
+/******************************** Included files ********************************/
 #include "main.h"
-//================================= Entry point ==================================
+/********************************** Definition **********************************/
+
+/********************************** Entry point *********************************/
 int main(void) {
 	cli();
-	DDRB = 0xff;
+	DDRB  = 0xff;
 	PORTB = 0x0;
-	DDRC = 0x30;
+	DDRC  = 0x30;
 	PORTC = 0x0f;
-	IDDR = 0xff;
+	IDDR  = 0xff;
 	IPORT = 0x0;
-	setup[0]=EEPROM_read(0x0000);
-	if (setup[0]>250) setup[0]=250;
-	setup[1]=EEPROM_read(0x0001);
-	if (setup[1]>250) setup[1]=250;
-	OCR2=40;
-	OCR1A=setup[0];
-	OCR1B=setup[1];
-	TCCR1A=BIT(WGM10)|BIT(COM1A1)|BIT(COM1B1);
-	TCCR1B=BIT(WGM12)|BIT(CS10);
+
+	setup[0] = EEPROM_read(0x0000);
+	if (setup[0] > 250) setup[0] = 250;
+	setup[1] = EEPROM_read(0x0001);
+	if (setup[1] > 250) setup[1] = 250;
+
+	OCR2  = 40;
+	OCR1A = setup[0];
+	OCR1B = setup[1];
+	TCCR1A= BIT(WGM10)|BIT(COM1A1)|BIT(COM1B1);
+	TCCR1B= BIT(WGM12)|BIT(CS10);
 	LCD_init();
 	sei();
+
 	while(1) {
-		if (control&BIT(0)) { //Проверка флага входа в цикл
-			control&=~BIT(0); //Сброс флага
-			if (!(control&BIT(6))) { //Проверка флага завершения инициализации дисплея
+		if (control&BIT(0)) {			// Checking the loop entry flag
+			control &= ~BIT(0);			/* Reset the flag */
+			if (!(control&BIT(6))) {	// Check the display initialization completion flag
 				cli();
-				LCD_init(); //Вызов инициализации дисплея
+				LCD_init();				/* Call initialization of the display */
 				sei();
 				continue;
 			}
-			if (!(control&BIT(5))) { //Проверка флага изменение значения
+			if (!(control&BIT(5))) {	// Check flag change value
 				cli();
-				//Выбор функции (конвертация значения или вывод значения на дисплей)
+				/* Selecting a function (converting a value or displaying a value) */
 				if (control&BIT(4)) LCD_show();
 				else convert(choice);
 				sei();
 				continue;
 			}
-			if (control&BIT(1)) {
+			if (control&BIT(1)) {		// Check the button processing flag
 				cli();
-				control&=~BIT(1);
-				time=125;
+				control &= ~BIT(1);		/* Reset the flag */
+				time = 125;
 				key_scan();
 				key_action();
 				sei();
 			}
 		}
 	}
-} //=========================== Private functions ================================
+}
+/***************************** Private functions ********************************/
 ISR (TIMER2_COMP_vect) {
-	register BYTE temp_control =control;
-	temp_control|=BIT(0);
-	if(!(--time)) temp_control|=BIT(1);
-	control = temp_control;
-} //==============================================================================
+	register BYTE t_control = control;
+	t_control |= BIT(0);
+	if(!(--time)) t_control |= BIT(1);
+	control = t_control;
+}
+/********************************************************************************/
