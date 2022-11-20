@@ -1,0 +1,5 @@
+[submodule "TaskManager"]
+	path = task_manager
+	url = https://github.com/malikalhack/TaskManagerLite.git
+	branch = development
+	
