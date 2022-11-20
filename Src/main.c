@@ -11,35 +11,16 @@
 #include "TaskManager.h"
 #include "bsp.h"
 #include "pwm.h"
-
-//#include "LCD.h"
-//#include "Keyboard.h"
-/********************************* Definition *********************************/
-enum descriptors_t {
-    FORBIDDEN_DESCRIPTOR = 0,
-    DISPLAY,
-    KEYBOARD,
-    WATCHDOG,
-    MAX_DESCRIPTOR
-};
-
 /**************************** Private  variables ******************************/
 static volatile WORD SysTime;    /* Time counter */;
 /********************************* Entry point ********************************/
 int main(void) {
     struct setup_t settings;
     pwm_init(&settings);
-    bsp_config(&settings);
+    bsp_config(&settings, &SysTime);
     tm_init(&SysTime);
-    lcd_init();
+    start_pwm();
 
-    //tm_add_task(KEYBOARD,);
-    //tm_add_task(WATCHDOG,);
-
-    while(1) {
-        int tm_run (void);
-    }
+    tm_run();
 }
-/***************************** Private functions ********************************/
-
 /********************************************************************************/

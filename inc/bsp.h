@@ -16,6 +16,13 @@ struct setup_t {
     BYTE ocr2;
 };
 /*************** Application Programming Interface prototypes *****************/
-void bsp_config(struct setup_t*);
+void bsp_config(struct setup_t*, volatile WORD*);
+void bsp_start_pwm(void);
+void bsp_stop_pwm(void);
+void bsp_change_pwm(BYTE, BYTE);
+void bsp_lcd_write(BYTE, BYTE);
+BYTE bsp_lcd_read(BYTE);
+void bsp_speed_up_systime(void);
+void bsp_normalize_systime(void);
 /******************************************************************************/
 #endif /* !BSP_H */

@@ -12,13 +12,13 @@
 /******************************** Included files ********************************/
 #include "standard.h"
 /********************************** Definition **********************************/
-#define BTNPORT		PORTC
-#define BTNPIN		PINC
-#define BTNDDR		DDRC
-#define btn_up		0
-#define btn_down	1
-#define btn_left	2
-#define btn_right	3
+#define BTNPORT     PORTC
+#define BTNPIN      PINC
+#define BTNDDR      DDRC
+#define btn_up      0
+#define btn_down    1
+#define btn_left    2
+#define btn_right   3
 /******************************** Prototypes API ********************************/
 void key_scan (void);
 void key_action (void);

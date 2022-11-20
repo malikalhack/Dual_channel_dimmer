@@ -14,18 +14,18 @@
 /********************* Application Programming Interface **********************/
 /* EEPROM read function */
 BYTE eeprom_read(WORD Addr) {
-	while(EECR & (1<<EEWE));
-	EEAR = Addr;
-	EECR |= (1<<EERE);
-	return EEDR;
+    while(EECR & (1<<EEWE));
+    EEAR = Addr;
+    EECR |= (1<<EERE);
+    return EEDR;
 }
 /*----------------------------------------------------------------------------*/
 /* EEPROM write function */
 void eeprom_write(WORD Addr, BYTE Data) {
-	while(EECR & (1<<EEWE));
-	EEAR = Addr;
-	EEDR = Data;
-	EECR |= (1<<EEMWE);
-	EECR |= (1<<EEWE);
+     while(EECR & (1<<EEWE));
+    EEAR = Addr;
+    EEDR = Data;
+    EECR |= (1<<EEMWE);
+    EECR |= (1<<EEWE);
 }
 /******************************************************************************/

@@ -11,6 +11,7 @@
 #include "bsp.h"
 /*************** Application Programming Interface prototypes *****************/
 void pwm_init(struct setup_t *);
+void start_pwm(void);
 /******************************************************************************/
 #endif /* !PWM_H */
 
