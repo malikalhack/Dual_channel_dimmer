@@ -42,6 +42,7 @@
 #define EEPROM_ADDR_OCR2    (0x0006)
 #define EVERY_SYS_TICK      (1)
 #define PWM_CTRL_PERIOD     (500)
+#define WATCH_DOG_PERIOD    (100)
 
 enum descriptors_t {
     FORBIDDEN_DESCRIPTOR = 0,
@@ -93,8 +94,8 @@ static void finalize_starting(void) {
     tm_add_task(DISPLAY_UPD, &update_lcd, &symbols, PERIODIC_MODE, EVERY_SYS_TICK);
     tm_add_task(KEYBOARD, &key_scan, NULLPTR, PERIODIC_MODE, SCAN_KEY_PERIOD);
     tm_add_task(PWM, &pwm_control, &symbols, PERIODIC_MODE, PWM_CTRL_PERIOD);
-    //tm_add_task(WATCHDOG, &wd_throw_bone, NULLPTR, PERIODIC_MODE, 100);
-    //wdt_start();
+    tm_add_task(WATCHDOG, &wd_throw_bone, NULLPTR, PERIODIC_MODE, WATCH_DOG_PERIOD);
+    wdt_start();
 }
 /*----------------------------------------------------------------------------*/
 static void lcd_write (register BYTE dat_com, register BYTE data) {

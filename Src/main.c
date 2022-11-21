@@ -22,7 +22,7 @@ int main(void) {
     bsp_config(&settings, &SysTime);
     tm_init(&SysTime);
     key_init();
-//    wdt_init(WD_1024K_CYCLES);
+    wdt_init(WD_1024K_CYCLES);
     start_pwm();
 
     return tm_run();

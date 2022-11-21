@@ -168,9 +168,9 @@
     <Compile Include="src\pwm.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\wdt.c">
+    <Compile Include="src\wdt.c">
       <SubType>compile</SubType>
-    </None>
+    </Compile>
     <Compile Include="task_manager\standard.h">
       <SubType>compile</SubType>
     </Compile>
