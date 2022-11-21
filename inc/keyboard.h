@@ -1,27 +1,39 @@
-/************************************
-* Title		: Keyboard.h			*
-* Release	: 0.1.B					*
-* Creator	: Malik					*
-* Frequency	: 8 MHz (int)			*
-* Created	: 27.07.2019 19:12:12	*
-* Changed	: 22.10.2020			*
-************************************/
+/**
+ * @file    keyboard.h
+ * @version 1.0.0
+ * @authors Anton Chernov
+ * @date    27.07.2019 19:12:12
+ * @date    21.11.2022
+ */
 
 #ifndef KEYBOARD_H_
 #define KEYBOARD_H_
 /******************************** Included files ********************************/
 #include "standard.h"
 /********************************** Definition **********************************/
-#define BTNPORT     PORTC
-#define BTNPIN      PINC
-#define BTNDDR      DDRC
-#define btn_up      0
-#define btn_down    1
-#define btn_left    2
-#define btn_right   3
-/******************************** Prototypes API ********************************/
-void key_scan (void);
-void key_action (void);
-extern void EEPROM_write(WORD Addr, BYTE Data);
+#define SCAN_KEY_PERIOD    (20)    /* parameter in ms */
+/******************** Task Manager functions prototypes ***********************/
+
+/**
+ * @brief Task Manager function to scan buttons. 
+ * @param[in] pntr void pointer (unused)
+ */
+void key_scan (void *);
+/****************************** Prototypes API ********************************/
+
+/** @brief An initialize function */
+void key_init (void);
+
+/**
+ * @brief A function that returns a snapshot of the keys from the buffer.
+ * @returns Snapshot of keys from the buffer.
+ */
+BYTE key_get (void);
+
+/**
+ * @brief A function that returns the number of key shots in the buffer.
+ * @returns The number of key snapshots in the buffer. 
+ */
+BYTE key_check (void);
 /********************************************************************************/
 #endif /* KEYBOARD_H_ */

@@ -144,13 +144,22 @@
     <Compile Include="inc\eeprom.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="inc\pwm.h">
+    <Compile Include="inc\keyboard.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="inc\pwm.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="inc\wdt.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\bsp.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EEPROM.c">
+    <Compile Include="src\eeprom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\keyboard.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.c">
@@ -159,6 +168,9 @@
     <Compile Include="src\pwm.c">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\wdt.c">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="task_manager\standard.h">
       <SubType>compile</SubType>
     </Compile>

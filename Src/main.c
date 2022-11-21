@@ -11,6 +11,8 @@
 #include "TaskManager.h"
 #include "bsp.h"
 #include "pwm.h"
+#include "keyboard.h"
+#include "wdt.h"
 /**************************** Private  variables ******************************/
 static volatile WORD SysTime;    /* Time counter */;
 /********************************* Entry point ********************************/
@@ -19,8 +21,10 @@ int main(void) {
     pwm_init(&settings);
     bsp_config(&settings, &SysTime);
     tm_init(&SysTime);
+    key_init();
+//    wdt_init(WD_1024K_CYCLES);
     start_pwm();
 
-    tm_run();
+    return tm_run();
 }
 /********************************************************************************/

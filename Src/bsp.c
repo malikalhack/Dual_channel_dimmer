@@ -3,7 +3,8 @@
  * @version 1.0.0
  * @authors Anton Chernov
  * @date    19.11.2022
- * @note    ATMega8 - 8 MHz
+ * @note    MCU:   ATmega8
+ * @note    Clock: 8 MHz
  */
 
 /******************************* Included files *******************************/
@@ -11,15 +12,16 @@
 #include <avr/interrupt.h>
 #include "bsp.h"
 /********************************* Definition *********************************/
-#define RS      (0)
-#define RW      (1)
-#define E       (2)
-#define DB4     (4)
-#define DB5     (5)
-#define DB6     (6)
-#define DB7     (7)
-#define IB      (0)
+#define RS          (0)
+#define RW          (1)
+#define E           (2)
+#define DB4         (4)
+#define DB5         (5)
+#define DB6         (6)
+#define DB7         (7)
+#define IB          (0)
 
+#define KEY_MASK            (BIT(BTN_UP)|BIT(BTN_DOWN)|BIT(BTN_LEFT)|BIT(BTN_RIGHT))
 #define LCD_DATA_MASK       (BIT(DB4) + BIT(DB5) + BIT(DB6) + BIT(DB7))
 #define LCD_CONTROL_MASK    (BIT(RS) + BIT(RW) + BIT(E))
 
@@ -48,7 +50,11 @@ void bsp_stop_pwm(void) {
 }
 /*----------------------------------------------------------------------------*/
 void bsp_change_pwm(register BYTE channel, register BYTE value) {
-
+    switch (channel) {
+        case 1: OCR1A = value; break;
+        case 2: OCR1B = value; break;
+        default: break;
+    }
 }
 /*----------------------------------------------------------------------------*/
 void bsp_lcd_write (register BYTE dat_com, register BYTE data) {
@@ -99,6 +105,11 @@ BYTE bsp_get_ocr1(void) {
 /*----------------------------------------------------------------------------*/
 BYTE bsp_get_ocr2(void) {
     return OCR1B;
+}
+/*----------------------------------------------------------------------------*/
+BYTE bsp_get_pins(void) {
+    register BYTE pins = PINC;
+    return (~pins & KEY_MASK);
 }
 /*----------------------------------------------------------------------------*/
 void bsp_speed_up_systime(void) {
