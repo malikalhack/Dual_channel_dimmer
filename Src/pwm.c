@@ -35,33 +35,41 @@
 #define f_I         (25)
 #define f_M         (26)
 
-#define CHECK_BUSY_FLAG(answer)   {if ((answer) & BIT(BUSY_FLAG)) break; }
-
-
+#define CHECK_BUSY_FLAG(answer)   {if ((answer) & BIT(BUSY_FLAG)) return; }
 
 enum descriptors_t {
     FORBIDDEN_DESCRIPTOR = 0,
     DISPLAY_INIT,
+    DISPLAY_UPD,
     KEYBOARD,
     WATCHDOG,
     MAX_DESCRIPTOR
 };
 /**************************** Private  variables ******************************/
 static BYTE keys_status;
-BYTE font[] = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
+static BYTE font[] = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
                 0x39, 0xb1, 0x70, 0xba, 0x6f, 0x63, 0xbf, 0xc4, 0x4b,
                 0x61, 0xbd, 0xbb, 0x25, 0xcc, 0x20, 0xac, 0xa5, 0x4d };
+static struct symbols_t {
+    BYTE channel;
+    BYTE hundreds;
+    BYTE tens;
+    BYTE units;
+} symbols = { .channel = 1, .hundreds = 0, .tens = 0, .units = 0 };
 /************************ Private  functions prototypes ***********************/
 static void lcd_init (void *);
 static void scan_keyboard(void *);
 static void lcd_write (BYTE, BYTE);
-//void lcd_show (void);
-//void lcd_convert (register BYTE value);
+static void convert (struct symbols_t*, BYTE);
+static void update_lcd (void*);
 /********************* Application Programming Interface **********************/
 void pwm_init(struct setup_t * settings) {
     keys_status    = 0;
-    settings->ocr1 = eeprom_read(0x0000);
+    BYTE temp      = eeprom_read(0x0000);
     settings->ocr2 = eeprom_read(0x0001);
+    settings->ocr1 = temp;
+
+    convert(&symbols, temp);
  }
 /*----------------------------------------------------------------------------*/
 void start_pwm(void) {
@@ -76,6 +84,7 @@ void start_pwm(void) {
 static void finalize_starting(void) {
     bsp_normalize_systime();  // sys tick in 1ms
     tm_kill_task(DISPLAY_INIT);
+    tm_add_task(DISPLAY_UPD, &update_lcd, &symbols, PERIODIC_MODE, 1);
     tm_add_task(KEYBOARD, &scan_keyboard, &keys_status, PERIODIC_MODE, 100);
 }
 /*----------------------------------------------------------------------------*/
@@ -86,107 +95,130 @@ static void lcd_write (register BYTE dat_com, register BYTE data) {
 /*----------------------------------------------------------------------------*/
 static void lcd_init (void * ptr) {
     static BYTE init_stage = 0;
-    switch (init_stage) {
+    CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
+    switch (init_stage++) {
         case 0: /* setting parameters */
             bsp_lcd_write(COMMAND, 0b00110000);
-            init_stage++;
             break;
         case 1 ... 2: /* setting parameters */
             bsp_lcd_write(COMMAND, 0b00100000);
             bsp_lcd_write(COMMAND, 0b11000000); // two lines, 5 * 11
-            init_stage++;
             break;
         case 3: /* turn on the display */
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             bsp_lcd_write(COMMAND, 0b00000000);
             bsp_lcd_write(COMMAND, 0b11000000); // Display on, cursor off, blink off
-            init_stage++;
             break;
         case 4: /* clear the display */
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             bsp_lcd_write(COMMAND, 0b00000000);
             bsp_lcd_write(COMMAND, 0b00010000);
-            init_stage++;
             break;
         case 5: /* setting the operating mode */
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             bsp_lcd_write(COMMAND, 0b00000000);
             bsp_lcd_write(COMMAND, 0b01100000); // right direction of movement to the cursor, no shift
-            init_stage++;
             break;
         /* Display the initial values of the indicator */
         case 6:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_Sh]);
-            init_stage++;
             break;
         case 7:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_I]);
-            init_stage++;
             break;
         case 8:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_M]);
-            init_stage++;
             break;
         case 9:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(COMMAND,0b10000111);
-            init_stage++;
             break;
         case 10:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_percent]);
-            init_stage++;
             break;
         case 11:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(COMMAND,0b11000000);
-            init_stage++;
             break;
         case 12:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_K]);
-            init_stage++;
             break;
         case 13:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_a]);
-            init_stage++;
             break;
         case 14:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_n]);
-            init_stage++;
             break;
         case 15:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_a]);
-            init_stage++;
             break;
         case 16:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_l]);
-            init_stage++;
             break;
         case 17:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_space]);
-            init_stage++;
             break;
         case 18:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(LCD_DATA,font[f_number]);
-            init_stage++;
             break;
         case 19:
-            CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
             lcd_write(COMMAND,0b10000100);
             finalize_starting();
-            init_stage++;
             break;
-        default: break;
+        default:
+            init_stage = 20;
+            break;
+    }
+}
+/*----------------------------------------------------------------------------*/
+static void update_lcd (void * ptr) {
+    struct symbols_t * src = (struct symbols_t *)ptr;
+    static BYTE counter = 0;
+    CHECK_BUSY_FLAG(bsp_lcd_read(COMMAND));
+    switch (counter++) {
+        case 0:
+            if(src->hundreds) {
+                lcd_write(LCD_DATA, font[1]);
+            } else {
+                lcd_write(LCD_DATA,font[f_space]);
+            }
+            break;
+        case 1:
+            if(src->hundreds || src->tens) {
+                lcd_write(LCD_DATA, font[src->tens]);
+            } else {
+                lcd_write(LCD_DATA,font[f_space]);
+            }
+            break;
+        case 2:
+            lcd_write(LCD_DATA, font[src->units]);
+            break;
+        case 3:
+            lcd_write(COMMAND, 0b11000111);
+            break;
+        case 4:
+            lcd_write(LCD_DATA,font[src->channel]);
+            break;
+        case 5:
+            lcd_write(COMMAND, 0b10000100);
+            tm_kill_task(DISPLAY_UPD);
+            counter = 0;
+            break;
+    }
+}
+/*----------------------------------------------------------------------------*/
+static void convert (struct symbols_t * dst, register BYTE value) {
+    register WORD temp1 = value * 100;
+    temp1 /= 255;
+    if (temp1 == 100) {
+        dst->hundreds = 1;
+        dst->tens     = 0;
+        dst->units    = 0;
+    }
+    else {
+        register BYTE temp2 = 0;
+        dst->hundreds = 0;
+        while (temp1 >= 10) {
+            temp1-=10;
+            temp2++;
+        }
+        dst->tens  = temp2;
+        dst->units = temp1;
     }
 }
 /*----------------------------------------------------------------------------*/

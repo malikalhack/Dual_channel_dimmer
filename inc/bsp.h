@@ -22,6 +22,8 @@ void bsp_stop_pwm(void);
 void bsp_change_pwm(BYTE, BYTE);
 void bsp_lcd_write(BYTE, BYTE);
 BYTE bsp_lcd_read(BYTE);
+BYTE bsp_get_ocr1(void);
+BYTE bsp_get_ocr2(void);
 void bsp_speed_up_systime(void);
 void bsp_normalize_systime(void);
 /******************************************************************************/
