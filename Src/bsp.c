@@ -1,8 +1,8 @@
 /**
- * @file    bsp.h
+ * @file    bsp.c
  * @version 1.0.0
  * @authors Anton Chernov
- * @date    19.11.2022
+ * @date    22.11.2022
  * @note    MCU:   ATmega8
  * @note    Clock: 8 MHz
  */
@@ -41,13 +41,9 @@ void bsp_config(struct setup_t * settings, volatile WORD * systime) {
     sei();
 }
 /*----------------------------------------------------------------------------*/
-void bsp_start_pwm(void) {
-    TCCR1B |= BIT(CS10);
-}
+void bsp_start_pwm(void) { TCCR1B |= BIT(CS10); }
 /*----------------------------------------------------------------------------*/
-void bsp_stop_pwm(void) {
-    TCCR1B &= ~BIT(CS10);
-}
+void bsp_stop_pwm(void) { TCCR1B &= ~BIT(CS10); }
 /*----------------------------------------------------------------------------*/
 void bsp_change_pwm(register BYTE channel, register BYTE value) {
     switch (channel) {
@@ -99,13 +95,9 @@ BYTE bsp_lcd_read(register BYTE dat_com) {
     return data;
 }
 /*----------------------------------------------------------------------------*/
-BYTE bsp_get_ocr1(void) {
-    return OCR1A;
-}
+BYTE bsp_get_ocr1(void) { return OCR1A; }
 /*----------------------------------------------------------------------------*/
-BYTE bsp_get_ocr2(void) {
-    return OCR1B;
-}
+BYTE bsp_get_ocr2(void) { return OCR1B; }
 /*----------------------------------------------------------------------------*/
 BYTE bsp_get_pins(void) {
     register BYTE pins = PINC;

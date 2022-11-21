@@ -1,9 +1,9 @@
 /**
- * @file    WDT.c
+ * @file    wdt.c
  * @version 1.0.0
  * @authors Anton Chernov
  * @date    06.05.2020
- * @date    21.11.2022
+ * @date    22.11.2022
  * @note    MCU:   ATmega8
  */
 
@@ -11,12 +11,10 @@
 #include <avr/io.h>
 #include "WDT.h"
 /*************************** Dispatcher functions *****************************/
-/** @fn throw_bone */
 void wd_throw_bone (void * ptr) {
     asm ("WDR");
 }
 /************************************* API ************************************/
-/** @fn wdt_init */
 void wdt_init(const BYTE cycles) {
     switch(cycles) {
         case WD_32K_CYCLES:
@@ -51,12 +49,10 @@ void wdt_init(const BYTE cycles) {
     }
 }
 /******************************************************************************/
-/** @fn wdt_start */
 void wdt_start(void) {
     WDTCR |= BIT(WDCE) + BIT(WDE);     /* WatchDog enable */
 }
 /******************************************************************************/
-/** @fn wdt_stop */
 void wdt_stop(void) {
     asm ("WDR");
     WDTCR |= BIT(WDCE) + BIT(WDE);

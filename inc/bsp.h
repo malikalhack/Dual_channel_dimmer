@@ -3,7 +3,8 @@
  * @version 1.0.0
  * @authors Anton Chernov
  * @date    19.11.2022
- * @note ATMega8 - 8 MHz
+ * @note    MCU:   ATmega8
+ * @note    Clock: 8 MHz
  */
 
 #ifndef BSP_H

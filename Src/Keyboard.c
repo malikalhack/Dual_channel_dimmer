@@ -3,13 +3,14 @@
  * @version 1.0.0
  * @authors Anton Chernov
  * @date    27.07.2019 19:12:12
- * @date    21.11.2022
+ * @date    22.11.2022
  */
 
-/******************************** Included files ********************************/
+/******************************* Included files *******************************/
 #include "keyboard.h"
 #include "bsp.h"
 /**************************** Private prototypes ******************************/
+
 /**
  * @brief A function that saves a snapshot of the keys to the buffer.
  * @param[in] data Snapshot of keys for buffer.
@@ -41,7 +42,6 @@ static struct key_buf_t {
     BYTE count;
 } key_buf;
 /************************** Task Manager functions ****************************/
-/** @fn key_scan */
 void key_scan (void * pntr) {
     register BYTE current_pins = bsp_get_pins();
     if (!current_pins) {
@@ -78,8 +78,6 @@ void key_scan (void * pntr) {
     }
 }
 /************************************** API ***********************************/
-
-/** @fn key_init */
 void key_init (void) {
     key_buf.head = 0;
     key_buf.tail = 0;
@@ -89,9 +87,7 @@ void key_init (void) {
     prev_stored_pins = 0;
     duration = 0;
 }
-/******************************************************************************/
-
-/** @fn get_key */
+/*----------------------------------------------------------------------------*/
 BYTE key_get (void) {
     register BYTE result = 0;
     if (key_buf.count) {
@@ -103,13 +99,9 @@ BYTE key_get (void) {
     }
     return result;
 }
-/******************************************************************************/
-
-/** @fn key_check */
+/*----------------------------------------------------------------------------*/
 BYTE key_check (void) { return key_buf.count; }
 /****************************** Private functions *****************************/
-
-/** @fn set_key */
 void set_key (register BYTE data) {
     if (key_buf.count) {
         BYTE tail_old = key_buf.tail++;

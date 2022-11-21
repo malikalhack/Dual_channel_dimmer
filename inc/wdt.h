@@ -1,9 +1,9 @@
 /**
- * @file    WDT.h
+ * @file    wdt.h
  * @version 1.0.0
  * @authors Anton Chernov
  * @date    06.05.2020
- * @date    26.08.2022
+ * @date    22.11.2022
  */
 #ifndef WDT_H_
 #define WDT_H_
@@ -19,6 +19,7 @@
 /****************************** Included files ********************************/
 #include "standard.h" /* Standard Header Files */
 /******************** Task Manager functions prototypes ***********************/
+
 /**
  * @brief Task manager function to reset the watchdog timer.
  * @param[in] ptr void pointer (unused)
@@ -26,6 +27,7 @@
 void wd_throw_bone (void *);
 
 /****************************** Prototypes API ********************************/
+
 /**
  * @brief Watchdog timer setting function.
  * @param[in] ptr pointer to parameter structure

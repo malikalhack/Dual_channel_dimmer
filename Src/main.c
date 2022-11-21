@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @authors Anton Chernov
  * @date    09.07.2015 12:43:51
- * @date    19.10.2020
+ * @date    22.10.2020
  * @details Two-channel dimmer control program with display of brightness level on LCD.
  */
 
