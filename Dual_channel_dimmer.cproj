@@ -5,7 +5,7 @@
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
     <ProjectGuid>{7105fbb0-a295-4b69-be5b-3a5d6bc4c448}</ProjectGuid>
-    <avrdevice>ATmega8</avrdevice>
+    <avrdevice>ATmega8A</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
     <Language>C</Language>
@@ -54,6 +54,9 @@
     <preserveEEPROM>true</preserveEEPROM>
     <ResetRule>0</ResetRule>
     <EraseKey />
+    <avrtoolserialnumber />
+    <avrdeviceexpectedsignature>0x1E9307</avrdeviceexpectedsignature>
+    <avrtoolinterface />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
