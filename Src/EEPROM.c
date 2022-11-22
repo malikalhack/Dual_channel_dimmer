@@ -1,6 +1,6 @@
 /**
  * @file    eeprom.c
- * @version 1.0.0
+ * @version 2.0.0
  * @authors Anton Chernov
  * @date    09.07.2015 12:43:51
  * @date    19.11.2022

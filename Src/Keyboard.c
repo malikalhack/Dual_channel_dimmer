@@ -1,6 +1,6 @@
 /**
  * @file    keyboard.c
- * @version 1.0.0
+ * @version 2.0.0
  * @authors Anton Chernov
  * @date    27.07.2019 19:12:12
  * @date    22.11.2022

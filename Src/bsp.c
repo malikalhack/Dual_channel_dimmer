@@ -1,6 +1,6 @@
 /**
  * @file    bsp.c
- * @version 1.0.0
+ * @version 2.0.0
  * @authors Anton Chernov
  * @date    22.11.2022
  * @note    MCU:   ATmega8
