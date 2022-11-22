@@ -6,6 +6,9 @@
 
 #### The main features of the project.  
 The device allows you to control two LED panels using PWM.
-It is built on the ATMega8A controller. The synthesizing display is used
+It is built on the ATMega8A controller. The alphanumeric display is used
 as an indication of the current brightness level
 for each of the control channels. The device is controlled using four buttons.  
+
+The connection diagram of this controller is shown in the figure below.
+![The connection diagram](/Images/Schematic.JPG "Schematic")
