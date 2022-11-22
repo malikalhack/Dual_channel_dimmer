@@ -77,8 +77,8 @@
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
             <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\include</Value>
-            <Value>../Src</Value>
-            <Value>../include</Value>
+            <Value>../inc</Value>
+            <Value>../task_manager</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -101,78 +101,93 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <AvrGcc>
-  <avrgcc.common.Device>-mmcu=atmega8 -B "%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\gcc\dev\atmega8"</avrgcc.common.Device>
-  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-  <avrgcc.common.outputfiles.lss>False</avrgcc.common.outputfiles.lss>
-  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-  <avrgcc.common.outputfiles.srec>False</avrgcc.common.outputfiles.srec>
-  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
-  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-  <avrgcc.compiler.symbols.DefSymbols>
-    <ListValues>
-      <Value>DEBUG</Value>
-    </ListValues>
-  </avrgcc.compiler.symbols.DefSymbols>
-  <avrgcc.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\include</Value>
-      <Value>../include</Value>
-      <Value>../Src</Value>
-    </ListValues>
-  </avrgcc.compiler.directories.IncludePaths>
-  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
-  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
-  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-  <avrgcc.compiler.miscellaneous.Verbose>True</avrgcc.compiler.miscellaneous.Verbose>
-  <avrgcc.linker.libraries.Libraries>
-    <ListValues>
-      <Value>libm</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.Libraries>
-  <avrgcc.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\include</Value>
-    </ListValues>
-  </avrgcc.assembler.general.IncludePaths>
-  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
-</AvrGcc>
+        <avrgcc.common.Device>-mmcu=atmega8 -B "%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\gcc\dev\atmega8"</avrgcc.common.Device>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>DEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\include</Value>
+            <Value>../inc</Value>
+            <Value>../task_manager</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.106\include</Value>
+          </ListValues>
+        </avrgcc.assembler.general.IncludePaths>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="include\standard.h">
+    <Compile Include="inc\bsp.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\EEPROM.h">
+    <Compile Include="inc\eeprom.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\Keyboard.h">
+    <Compile Include="inc\keyboard.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\LCD.h">
+    <None Include="inc\pwm.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="inc\wdt.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\main.h">
+    <Compile Include="src\bsp.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EEPROM.c">
+    <Compile Include="src\eeprom.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\keyboard.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\LCD.c">
+    <Compile Include="src\main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\main.c">
+    <Compile Include="src\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\wdt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="task_manager\standard.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="task_manager\TaskManager.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="task_manager\TaskManager.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="include" />
+    <Folder Include="task_manager" />
     <Folder Include="src" />
+    <Folder Include="inc" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
