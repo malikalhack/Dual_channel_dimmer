@@ -7,3 +7,5 @@ Indicator.atsuo
 Indicator.cproj
 Indicator_6_1.cproj
 Indicator.componentinfo.xml
+
+*.componentinfo.xml
